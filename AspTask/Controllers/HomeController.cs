@@ -1,5 +1,6 @@
 ﻿using AspTask.DAL;
 using AspTask.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,10 +24,16 @@ namespace AspTask.Controllers
                 Slides =await _context.Slides.ToListAsync(),
                 Introduction =await _context.Introduction.FirstOrDefaultAsync(),
                 Categories=await _context.Categories.Where(c=>c.IsDeleted==false).ToListAsync(),
-                Products=await _context.Products.Where(p=>p.IsDeleted==false)
-                .Include(p=>p.Images).Include(p=>p.Category).OrderByDescending(p=>p.Id).Take(8).ToListAsync()
+                
             };
+           
             return View(homeViewModel);
+        }
+        public IActionResult AddBasket (int? id)
+        {
+
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }
